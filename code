@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Library Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">📚 Library Management System</div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#books">Books</a>
+        <a href="#members">Members</a>
+        <a href="#issue">Issue / Return</a>
+    </nav>
+</header>
+
+<section id="home" class="hero">
+    <div>
+        <h1>Online Library Management System</h1>
+        <p>Manage books, members and library transactions easily.</p>
+        <a href="#books" class="btn">Explore Books</a>
+    </div>
+</section>
+
+<section class="dashboard">
+
+    <div class="card">
+        <h3>Total Books</h3>
+        <p id="totalBooks">0</p>
+    </div>
+
+    <div class="card">
+        <h3>Available Books</h3>
+        <p id="availableBooks">0</p>
+    </div>
+
+    <div class="card">
+        <h3>Members</h3>
+        <p id="totalMembers">0</p>
+    </div>
+
+    <div class="card">
+        <h3>Issued Books</h3>
+        <p id="issuedBooks">0</p>
+    </div>
+
+</section>
+
+<!-- BOOKS -->
+
+<section id="books" class="section">
+
+    <h2>📚 Book Management</h2>
+
+    <div class="form-container">
+
+        <input type="text" id="bookTitle" placeholder="Book Title">
+        <input type="text" id="bookAuthor" placeholder="Author">
+        <input type="text" id="bookCategory" placeholder="Category">
+
+        <button onclick="addBook()">Add Book</button>
+
+    </div>
+
+    <input
+        type="text"
+        id="searchBook"
+        class="search"
+        placeholder="Search books..."
+        onkeyup="displayBooks()"
+    >
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="bookTable"></tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+<!-- MEMBERS -->
+
+<section id="members" class="section">
+
+    <h2>👥 Member Management</h2>
+
+    <div class="form-container">
+
+        <input type="text" id="memberName" placeholder="Member Name">
+        <input type="email" id="memberEmail" placeholder="Email">
+        <input type="text" id="memberPhone" placeholder="Phone">
+
+        <button onclick="addMember()">Add Member</button>
+
+    </div>
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Action</th>
+                </tr>
+
+            </thead>
+
+            <tbody id="memberTable"></tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+<!-- ISSUE / RETURN -->
+
+<section id="issue" class="section">
+
+    <h2>📖 Issue / Return Books</h2>
+
+    <div class="form-container">
+
+        <select id="issueBook"></select>
+        <select id="issueMember"></select>
+
+        <button onclick="issueBook()">Issue Book</button>
+
+    </div>
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Book</th>
+                    <th>Member</th>
+                    <th>Issue Date</th>
+                    <th>Action</th>
+                </tr>
+
+            </thead>
+
+            <tbody id="issueTable"></tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+<footer>
+
+    <p>© 2026 Online Library Management System</p>
+
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+
+3. style.css
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #f4f6f9;
+    color: #333;
+}
+
+/* Header */
+
+header {
+    background: #1e3a8a;
+    color: white;
+    padding: 18px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+nav a:hover {
+    color: #93c5fd;
+}
+
+/* Hero */
+
+.hero {
+    min-height: 400px;
+    background: linear-gradient(
+        rgba(30, 58, 138, 0.85),
+        rgba(30, 64, 175, 0.85)
+    ),
+    url("https://images.unsplash.com/photo-1507842217343-583bb7270b66")
+    center/cover;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    padding: 30px;
+}
+
+.hero h1 {
+    font-size: 45px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 20px;
+    margin-bottom: 25px;
+}
+
+.btn {
+    display: inline-block;
+    background: white;
+    color: #1e3a8a;
+    padding: 12px 25px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Dashboard */
+
+.dashboard {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+}
+
+.card h3 {
+    color: #555;
+}
+
+.card p {
+    font-size: 35px;
+    font-weight: bold;
+    color: #1e3a8a;
+    margin-top: 10px;
+}
+
+/* Sections */
+
+.section {
+    width: 90%;
+    max-width: 1200px;
+    margin: 50px auto;
+}
+
+.section h2 {
+    margin-bottom: 20px;
+    color: #1e3a8a;
+}
+
+/* Forms */
+
+.form-container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+input,
+select {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    flex: 1;
+    min-width: 180px;
+}
+
+button {
+    background: #1e3a8a;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #172554;
+}
+
+.search {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Tables */
+
+.table-container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 13px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background: #1e3a8a;
+    color: white;
+}
+
+.delete-btn {
+    background: #dc2626;
+}
+
+.return-btn {
+    background: #16a34a;
+}
+
+/* Footer */
+
+footer {
+    background: #1e3a8a;
+    color: white;
+    text-align: center;
+    padding: 25px;
+    margin-top: 50px;
+}
+
+/* Responsive */
+
+@media (max-width: 800px) {
+
+    header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    nav a {
+        margin: 5px;
+        display: inline-block;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 27px;
+    }
+
+    .form-container {
+        flex-direction: column;
+    }
+
+    input,
+    select,
+    button {
+        width: 100%;
+    }
+}
+
+4. script.js
+// -----------------------------
+// DATA
+// -----------------------------
+
+let books = JSON.parse(localStorage.getItem("books")) || [
+    {
+        id: 1,
+        title: "The Alchemist",
+        author: "Paulo Coelho",
+        category: "Fiction",
+        status: "Available"
+    },
+    {
+        id: 2,
+        title: "Clean Code",
+        author: "Robert C. Martin",
+        category: "Programming",
+        status: "Available"
+    },
+    {
+        id: 3,
+        title: "Atomic Habits",
+        author: "James Clear",
+        category: "Self Help",
+        status: "Available"
+    }
+];
+
+let members = JSON.parse(localStorage.getItem("members")) || [];
+
+let transactions =
+    JSON.parse(localStorage.getItem("transactions")) || [];
+
+
+// -----------------------------
+// SAVE DATA
+// -----------------------------
+
+function saveData() {
+
+    localStorage.setItem("books", JSON.stringify(books));
+
+    localStorage.setItem(
+        "members",
+        JSON.stringify(members)
+    );
+
+    localStorage.setItem(
+        "transactions",
+        JSON.stringify(transactions)
+    );
+}
+
+
+// -----------------------------
+// ADD BOOK
+// -----------------------------
+
+function addBook() {
+
+    const title =
+        document.getElementById("bookTitle").value.trim();
+
+    const author =
+        document.getElementById("bookAuthor").value.trim();
+
+    const category =
+        document.getElementById("bookCategory").value.trim();
+
+    if (!title || !author || !category) {
+
+        alert("Please fill all book details.");
+
+        return;
+    }
+
+    const newBook = {
+
+        id: Date.now(),
+
+        title: title,
+
+        author: author,
+
+        category: category,
+
+        status: "Available"
+    };
+
+    books.push(newBook);
+
+    saveData();
+
+    document.getElementById("bookTitle").value = "";
+    document.getElementById("bookAuthor").value = "";
+    document.getElementById("bookCategory").value = "";
+
+    displayBooks();
+
+    updateDashboard();
+
+    updateSelects();
+}
+
+
+// -----------------------------
+// DISPLAY BOOKS
+// -----------------------------
+
+function displayBooks() {
+
+    const table =
+        document.getElementById("bookTable");
+
+    const search =
+        document.getElementById("searchBook")
+        .value
+        .toLowerCase();
+
+    table.innerHTML = "";
+
+    const filteredBooks = books.filter(book =>
+
+        book.title.toLowerCase().includes(search) ||
+
+        book.author.toLowerCase().includes(search) ||
+
+        book.category.toLowerCase().includes(search)
+    );
+
+    filteredBooks.forEach(book => {
+
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+
+            <td>${book.id}</td>
+
+            <td>${book.title}</td>
+
+            <td>${book.author}</td>
+
+            <td>${book.category}</td>
+
+            <td>
+                <strong style="
+                    color:${book.status === "Available"
+                        ? "green"
+                        : "red"};
+                ">
+                    ${book.status}
+                </strong>
+            </td>
+
+            <td>
+                <button
+                    class="delete-btn"
+                    onclick="deleteBook(${book.id})">
+                    Delete
+                </button>
+            </td>
+        `;
+
+        table.appendChild(row);
+    });
+}
+
+
+// -----------------------------
+// DELETE BOOK
+// -----------------------------
+
+function deleteBook(id) {
+
+    const book = books.find(b => b.id === id);
+
+    if (book && book.status === "Issued") {
+
+        alert("This book is currently issued.");
+
+        return;
+    }
+
+    if (!confirm("Delete this book?")) {
+        return;
+    }
+
+    books = books.filter(book => book.id !== id);
+
+    saveData();
+
+    displayBooks();
+
+    updateDashboard();
+
+    updateSelects();
+}
+
+
+// -----------------------------
+// ADD MEMBER
+// -----------------------------
+
+function addMember() {
+
+    const name =
+        document.getElementById("memberName").value.trim();
+
+    const email =
+        document.getElementById("memberEmail").value.trim();
+
+    const phone =
+        document.getElementById("memberPhone").value.trim();
+
+    if (!name || !email || !phone) {
+
+        alert("Please fill all member details.");
+
+        return;
+    }
+
+    const member = {
+
+        id: Date.now(),
+
+        name: name,
+
+        email: email,
+
+        phone: phone
+    };
+
+    members.push(member);
+
+    saveData();
+
+    document.getElementById("memberName").value = "";
+    document.getElementById("memberEmail").value = "";
+    document.getElementById("memberPhone").value = "";
+
+    displayMembers();
+
+    updateDashboard();
+
+    updateSelects();
+}
+
+
+// -----------------------------
+// DISPLAY MEMBERS
+// -----------------------------
+
+function displayMembers() {
+
+    const table =
+        document.getElementById("memberTable");
+
+    table.innerHTML = "";
+
+    members.forEach(member => {
+
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+
+            <td>${member.id}</td>
+
+            <td>${member.name}</td>
+
+            <td>${member.email}</td>
+
+            <td>${member.phone}</td>
+
+            <td>
+                <button
+                    class="delete-btn"
+                    onclick="deleteMember(${member.id})">
+                    Delete
+                </button>
+            </td>
+        `;
+
+        table.appendChild(row);
+    });
+}
+
+
+// -----------------------------
+// DELETE MEMBER
+// -----------------------------
+
+function deleteMember(id) {
+
+    const hasIssuedBook =
+        transactions.some(
+            transaction =>
+                transaction.memberId === id &&
+                !transaction.returned
+        );
+
+    if (hasIssuedBook) {
+
+        alert(
+            "This member has an issued book and cannot be deleted."
+        );
+
+        return;
+    }
+
+    if (!confirm("Delete this member?")) {
+        return;
+    }
+
+    members =
+        members.filter(member => member.id !== id);
+
+    saveData();
+
+    displayMembers();
+
+    updateDashboard();
+
+    updateSelects();
+}
+
+
+// -----------------------------
+// UPDATE SELECT BOXES
+// -----------------------------
+
+function updateSelects() {
+
+    const bookSelect =
+        document.getElementById("issueBook");
+
+    const memberSelect =
+        document.getElementById("issueMember");
+
+    bookSelect.innerHTML =
+        '<option value="">Select Book</option>';
+
+    memberSelect.innerHTML =
+        '<option value="">Select Member</option>';
+
+    books
+        .filter(book => book.status === "Available")
+        .forEach(book => {
+
+            const option =
+                document.createElement("option");
+
+            option.value = book.id;
+
+            option.textContent =
+                book.title;
+
+            bookSelect.appendChild(option);
+        });
+
+    members.forEach(member => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = member.id;
+
+        option.textContent =
+            member.name;
+
+        memberSelect.appendChild(option);
+    });
+}
+
+
+// -----------------------------
+// ISSUE BOOK
+// -----------------------------
+
+function issueBook() {
+
+    const bookId =
+        Number(
+            document.getElementById("issueBook").value
+        );
+
+    const memberId =
+        Number(
+            document.getElementById("issueMember").value
+        );
+
+    if (!bookId || !memberId) {
+
+        alert("Please select a book and member.");
+
+        return;
+    }
+
+    const book =
+        books.find(book => book.id === bookId);
+
+    const member =
+        members.find(member => member.id === memberId);
+
+    if (!book || !member) {
+
+        alert("Invalid book or member.");
+
+        return;
+    }
+
+    if (book.status === "Issued") {
+
+        alert("Book is already issued.");
+
+        return;
+    }
+
+    book.status = "Issued";
+
+    const transaction = {
+
+        id: Date.now(),
+
+        bookId: bookId,
+
+        memberId: memberId,
+
+        issueDate:
+            new Date().toLocaleDateString(),
+
+        returned: false,
+
+        returnDate: null
+    };
+
+    transactions.push(transaction);
+
+    saveData();
+
+    displayBooks();
+
+    displayTransactions();
+
+    updateDashboard();
+
+    updateSelects();
+}
+
+
+// -----------------------------
+// DISPLAY TRANSACTIONS
+// -----------------------------
+
+function displayTransactions() {
+
+    const table =
+        document.getElementById("issueTable");
+
+    table.innerHTML = "";
+
+    transactions.forEach(transaction => {
+
+        const book =
+            books.find(
+                book => book.id === transaction.bookId
+            );
+
+        const member =
+            members.find(
+                member => member.id === transaction.memberId
+            );
+
+        if (!book || !member) {
+            return;
+        }
+
+        const row =
+            document.createElement("tr");
+
+        row.innerHTML = `
+
+            <td>${book.title}</td>
+
+            <td>${member.name}</td>
+
+            <td>${transaction.issueDate}</td>
+
+            <td>
+
+                ${
+                    transaction.returned
+
+                    ? `<span style="color:green">
+                        Returned
+                       </span>`
+
+                    : `<button
+                        class="return-btn"
+                        onclick="returnBook(${transaction.id})">
+                        Return
+                       </button>`
+                }
+
+            </td>
+        `;
+
+        table.appendChild(row);
+    });
+}
+
+
+// -----------------------------
+// RETURN BOOK
+// -----------------------------
+
+function returnBook(transactionId) {
+
+    const transaction =
+        transactions.find(
+            transaction =>
+                transaction.id === transactionId
+        );
+
+    if (!transaction) {
+        return;
+    }
+
+    const book =
+        books.find(
+            book =>
+                book.id === transaction.bookId
+        );
+
+    if (book) {
+
+        book.status = "Available";
+    }
+
+    transaction.returned = true;
+
+    transaction.returnDate =
+        new Date().toLocaleDateString();
+
+    saveData();
+
+    displayBooks();
+
+    displayTransactions();
+
+    updateDashboard();
+
+    updateSelects();
+}
+
+
+// -----------------------------
+// DASHBOARD
+// -----------------------------
+
+function updateDashboard() {
+
+    const totalBooks =
+        books.length;
+
+    const availableBooks =
+        books.filter(
+            book => book.status === "Available"
+        ).length;
+
+    const issuedBooks =
+        books.filter(
+            book => book.status === "Issued"
+        ).length;
+
+    const totalMembers =
+        members.length;
+
+    document.getElementById(
+        "totalBooks"
+    ).textContent = totalBooks;
+
+    document.getElementById(
+        "availableBooks"
+    ).textContent = availableBooks;
+
+    document.getElementById(
+        "issuedBooks"
+    ).textContent = issuedBooks;
+
+    document.getElementById(
+        "totalMembers"
+    ).textContent = totalMembers;
+}
+
+
+Output:
+
+┌────────────────────────────────────────────────────────────────────┐
+│ 📚 Library Management System     Home  Books  Members  Issue/Return│
+├────────────────────────────────────────────────────────────────────┤
+│                                                                    │
+│              ONLINE LIBRARY MANAGEMENT SYSTEM                      │
+│                                                                    │
+│       Manage books, members and library transactions easily.       │
+│                                                                    │
+│                    [ Explore Books ]                               │
+│                                                                    │
+├────────────────────────────────────────────────────────────────────┤
+│                                                                    │
+│   ┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ┌───────────┐ │
+│   │ Total Books  │ │ Available    │ │   Members    │ │  Issued   │ │
+│   │              │ │    Books     │ │              │ │  Books    │ │
+│   │      3       │ │      3       │ │      0       │ │     0     │ │
+│   └──────────────┘ └──────────────┘ └──────────────┘ └───────────┘ │
+│                                                                    │
+├────────────────────────────────────────────────────────────────────┤
+│ 📚 Book Management                                                 │
+│                                                                    │
+│ [Book Title] [Author] [Category] [ Add Book ]                     │
+│                                                                    │
+│ [ Search books... ]                                               │
+│                                                                    │
+│ ┌────┬────────────────┬────────────────┬────────────┬───────────┐ │
+│ │ ID │ Title          │ Author         │ Category   │ Status    │ │
+│ ├────┼────────────────┼────────────────┼────────────┼───────────┤ │
+│ │  1 │ The Alchemist  │ Paulo Coelho   │ Fiction    │ Available │ │
+│ │  2 │ Clean Code     │ Robert Martin  │ Programming│ Available │ │
+│ │  3 │ Atomic Habits  │ James Clear    │ Self Help  │ Available │ │
+│ └────┴────────────────┴────────────────┴────────────┴───────────┘ │
+│                                                                    │
+├────────────────────────────────────────────────────────────────────┤
+│ 👥 Member Management                                               │
+│                                                                    │
+│ [Member Name] [Email] [Phone] [ Add Member ]                      │
+│                                                                    │
+├────────────────────────────────────────────────────────────────────┤
+│ 📖 Issue / Return Books                                            │
+│                                                                    │
+│ [ Select Book ▼ ] [ Select Member ▼ ] [ Issue Book ]              │
+│                                                                    │
+│ ┌────────────────┬──────────────┬─────────────┬───────────────┐   │
+│ │ Book           │ Member       │ Issue Date  │ Action        │   │
+│ └────────────────┴──────────────┴─────────────┴───────────────┘   │
+│                                                                    │
+├────────────────────────────────────────────────────────────────────┤
+│              © 2026 Online Library Management System               │
+└────────────────────────────────────────────────────────────────────┘
+
+When you add a book
+For example, enter:
+
+Book Title: Harry Potter
+Author: J.K. Rowling
+Category: Fantasy
+
+and click Add Book.
+
+It will appear in the table:
+
+ID       Title          Author          Category       Status
+----------------------------------------------------------------
+1        The Alchemist  Paulo Coelho    Fiction        Available
+2        Clean Code     Robert Martin   Programming    Available
+3        Atomic Habits  James Clear     Self Help      Available
+4        Harry Potter   J.K. Rowling    Fantasy        Available
+
+The Total Books counter will automatically change from 3 to 4.
+
+When you issue a book
+After adding a member, select:
+
+Book: Harry Potter
+Member: John
+
+and click Issue Book.
+
+The dashboard changes to:
+
+Total Books       4
+Available Books   3
+Members           1
+Issued Books     1
+
+The book status becomes:
+
+Harry Potter    J.K. Rowling    Fantasy    Issued
+
+
+
